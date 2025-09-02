@@ -149,6 +149,13 @@ struct ReaderSettingsView: View {
                             )
                         )
                         if upscaleImages.value {
+                            SettingView(
+                                setting: .init(
+                                    key: "Reader.upscaleOnDownload",
+                                    title: NSLocalizedString("UPSCALE_ON_DOWNLOAD"),
+                                    value: .toggle(.init())
+                                )
+                            )
                             NavigationLink(destination: UpscaleModelListView()) {
                                 Text(NSLocalizedString("UPSCALING_MODELS"))
                             }
@@ -158,7 +165,7 @@ struct ReaderSettingsView: View {
                                     title: NSLocalizedString("UPSCALE_MAX_IMAGE_HEIGHT"),
                                     value: .stepper(.init(
                                         minimumValue: 200,
-                                        maximumValue: 4000,
+                                        maximumValue: 20000,
                                         stepValue: 100
                                     ))
                                 )
