@@ -174,10 +174,21 @@ actor DownloadTask: Identifiable {
                 }
 
                 if let (data, res) = result {
+                    var finalData = data
+                    if UserDefaults.standard.bool(forKey: "Reader.upscaleOnDownload") {
+                        if let image = PlatformImage(data: data) {
+                            let processor = UpscaleProcessor()
+                            if let upscaledImage = processor.process(image) {
+                                if let pngData = upscaledImage.pngData() {
+                                    finalData = pngData
+                                }
+                            }
+                        }
+                    }
                     // See if we can guess the file extension
                     let fileExtention = self.guessFileExtension(response: res, defaultValue: "png")
                     do {
-                        try data.write(
+                        try finalData.write(
                             to: tmpDirectory
                                 .appendingPathComponent(pageNumber)
                                 .appendingPathExtension(fileExtention)
