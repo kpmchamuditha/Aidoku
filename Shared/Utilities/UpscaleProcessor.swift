@@ -31,7 +31,7 @@ struct UpscaleProcessor: ImageProcessing {
         }
 
         // ensure image is smaller than max height
-        let maxHeight = UserDefaults.standard.integer(forKey: "Reader.upscaleMaxHeight")
+        let maxHeight = 20000
         guard cgImage.height < maxHeight else { return image }
 
         return BlockingTask {
